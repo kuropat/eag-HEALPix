@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <title>PixTools</title>
+  <link rel="shortcut icon" href="./eag.png" type="image/x-icon" />
+    <meta name="generator" content="amaya 9.0, see http://www.w3.org/Amaya/" /> 
+</head>
+
+<body>
+<p><img alt="EAG logo" src="eag.png" /></p>
+
+<h1>HEALPix PixTools.java</h1>
+
+<p><strong>The package gov.fnal.eag.healpix contains four classes -
+PixTools.java , Region.java,  service classes BitManipulation.java, and PixInfo.java </strong></p>
+
+<p><strong>These classes in general are translation of the corresponding <a
+href="http://www.eso.org/science/healpix/index.html">HEALPix</a> FORTRAN90
+programs to Java.</strong></p>
+
+<p><strong>The translation is not straight forward, but included junit tests have
+validated the package.</strong></p>
+
+
+
+<h2></h2>
+
+<p><strong> </strong></p>
+
+<h2>The Package Overview.</h2>
+
+<p><strong>The package creates sky pixelization to a specified resolution.
+The original FORTRAN version has natural limit imposed by HEALPix to the number of
+pixels Npix = 12 x N^2, where N  the number of sides is an integer
+power of 2 and &lt;= 8192 (Npix ~ 8.0E8) </strong> </p>
+
+<p><strong>The presented Java version overcomes this limitation boosting the
+resolution to about 0.2 arcsec (Npix ~ 1.3E13) which seems to be sufficient for modern experiments
+like SNAP </strong> </p>
+
+
+<p><strong>These tools permit creation of HEALPix maps as well as  use
+of existing maps. There are tools to translate sky coordinates (Ra, Dec) to
+a pixel number, and to generate a list of neighboring pixels within some specified
+radius. More complicated queries are also supported.</strong></p>
+
+<p></p>
+	
+<p><strong>The new class Region was added to the package. The class permits to define
+a rectangular area on the sphere providing standard ra,dec (Right ascension and Declination) limits of the area.
+Provided methods permits to pixelize the area with specified size of pixels.</strong></p>
+
+<p></p>
+<h2>Package API.</h2>
+
+<p><strong>For API description see <a
+href="./doc/index.html">Java docs</a>.</strong></p>
+
+<p></p>
+
+<p><strong> To download the self-installing jar file click <a href="http://home.fnal.gov/~kuropat/HEALPIX/eag-HEALPix.jar">here</a>.</strong></p>
+
+<p> To install these jar files and the package documentation use command:</p>
+<p><strong> java -jar eag-HEALPix.jar </strong></p>
+<p><strong> This will create in the installation directory two jar files (vecmath.jar, PixTools.jar) and the "doc" subdirectory.
+<p></p>
+<h2>Optimization.</h2>
+<p><strong>Working with highest resolution is time consuming and can be prohibitive.
+There is an optimized version of this package giving significant improvement in some cases. This version
+was developed by Jan Kotek, and can be found <a href="http://code.google.com/p/healpix-rangeset/">here</a>.</strong></p>
+<p></p>
+<p><em>06/14/2005 Nikolay Kuropatkin.</em></p>
+<p><em>12/19/2007 Nikolay Kuropatkin.</em></p>
+<p><em>04/11/2008 Nikolay Kuropatkin.</em></p>
+<p><em>07/09/2008 Nikolay Kuropatkin. Bug fixed in inRing method</em></p>
+<p><em>02/09/2010 Nikolay Kuropatkin. Bug was found by Jan Kotek in Query-disc with search
+radius smaller than the pixel size. Fixed.</em></p>
+<p><em> 11 Jan 2012 Nikolay Kuropatkin. Make the BitManipulation a static class.</em></p>
+<p><em>11 Jan 2012 modifications were proposed and implemented by Mark Taylor to make the package thread safe.</em></p>
+<p><strong> All methods are thread safe now.  This class can be used as a singleton,
+   the singleton instance being available from the <em>getInstance</em>  method.
+   For compatibility with previous versions however it is possible to
+   construct new instances using the default constructor.</strong></p>
+<p><strong> Unit tests showing various methods of using the class are provided.</strong></p>
+<p><em> 28 Jul 2012 Nikolay Kuropatkin. To address some silly test of QuertyDisc method
+when two close points over the pole are missing each other in inclusive search the radius modification
+ for inclusive search was changed.
+As the pixel shape is changing toward the pole from almost square to triangular the radius modifier should grow.
+In normal case close to equator the modifier is chosen to be half of the angular size of
+ the pixel. Now the modifier is a function of the z component of unit vector pointing in the center of disc. 
+ The modifier value M=a+abs(z)*a, where a is half pixel size.
+ In this case no changes in the QueryDisc behavior in the equatorial area is expected, 
+ while in the polar area one can expect increased number of pixels returned in the 
+ inclusive search. The maximum number of additional pixels can be estimated as
+  2*PI*(radius + M)/(2*a).</em></p>
+
+</body>
+</html>
