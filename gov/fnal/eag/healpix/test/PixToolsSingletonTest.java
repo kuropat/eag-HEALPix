@@ -51,7 +51,7 @@ public class PixToolsSingletonTest extends TestCase {
         double res2 = v1.angle(v2);
         System.out.println("res1 = " + res1 + " res2=" + res2);
         assertEquals("angular Distance=" + res2, 1.0, res1 / res2, 1e-10);
-        /* Check known problem with vecmath for small vector differences */
+
 
         Vector3d v3 = new Vector3d(1.5, 1.6, 0.);
         Vector3d v4 = new Vector3d(1.5, 1.601, 0.);
@@ -59,14 +59,13 @@ public class PixToolsSingletonTest extends TestCase {
         double res4 = v3.angle(v4);
 //
         System.out.println("res3 = " + res3 + " res4=" + res4);
-        assertEquals("angular Distance=" + res4, 1., (Math.PI / 2. + res3)
-                / res4, 1e-3);
+        assertEquals("angular Distance=" + res4, 1.,  res3/res4, 1e-3);
         Vector3d v5 = new Vector3d(1.5, 1.6, 0.);
         Vector3d v6 = new Vector3d(-1.5, -1.75, 0.);
         double res5 = PixTools.getInstance().AngDist(v5, v6);
         double res6 = v5.angle(v6);
         System.out.println("res5 = " + res5 + " res6=" + res6);
-        assertEquals("angular Distance=" + res6, 2.0, res5 / res6, 1e-10);
+        assertEquals("angular Distance=" + res6, 1.0, res5 / res6, 1e-10);
         System.out.println(" test of AngDist is done");
     }
 
