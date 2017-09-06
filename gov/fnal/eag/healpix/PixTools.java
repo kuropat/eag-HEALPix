@@ -1429,6 +1429,7 @@ public class PixTools {
 			if ((long) BitManipulation.MODULO(ir, 2) == 0)
 				kshift = 1; // 1 if ir even, 0 otherwise
 			ip = (long) ((jp + jm - nside + kshift + 1) / 2) + 1; // in [1,4n]
+			if (ip > nl4) ip = ip - nl4;
 			ipix1 = ncap + nl4 * (ir - 1) + ip;
 		} else { // North and South polar caps
 			tp = tt - (long) tt;
